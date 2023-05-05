@@ -20,10 +20,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout', 'index'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -131,14 +131,14 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionPasien()
-    {
-        $welcome = 'Selamat Datang di Halaman Pasien';
-        return $this->render(
-            'pasien',
-            [
-                'welcome' => $welcome,
-            ]
-        );
-    }
+    // public function actionPasien()
+    // {
+    //     $welcome = 'Selamat Datang di Halaman Pasien';
+    //     return $this->render(
+    //         'pasien',
+    //         [
+    //             'welcome' => $welcome,
+    //         ]
+    //     );
+    // }
 }
