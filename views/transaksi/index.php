@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /** @var app\models\TransaksiSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Transaksis';
+$this->title = 'Data Transaksi';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transaksi-index">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Transaksi', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Transaksi', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>

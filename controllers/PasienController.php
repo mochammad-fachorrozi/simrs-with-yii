@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use Yii;
+use app\models\User;
 use app\models\Pasien;
-use app\models\PasienSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\PasienSearch;
+use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * PasienController implements the CRUD actions for Pasien model.
@@ -21,6 +24,20 @@ class PasienController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['index', 'create', 'update', 'view'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view', 'grafik-pasien'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                return User::isUserAdmin(Yii::$app->user->identity->username) || User::isUserKasir(Yii::$app->user->identity->username);
+                            }
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -130,5 +147,14 @@ class PasienController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    // grafik
+    public function actionGrafikPasien()
+    {
+        $model = new Pasien();
+        return $this->render('grafik-pasien', [
+            'model' => $model,
+        ]);
     }
 }

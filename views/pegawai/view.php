@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Pegawai $model */
 
-$this->title = $model->id_pegawai;
-$this->params['breadcrumbs'][] = ['label' => 'Pegawais', 'url' => ['index']];
+$this->title = $model->nama_lengkap;
+$this->params['breadcrumbs'][] = ['label' => 'Data Pegawai', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_pegawai' => $model->id_pegawai], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_pegawai' => $model->id_pegawai], [
+        <?= Html::a('Edit', ['update', 'id_pegawai' => $model->id_pegawai], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Hapus', ['delete', 'id_pegawai' => $model->id_pegawai], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Anda yakin ingin menghapus data?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_pegawai',
+            // 'id_pegawai',
             'nama_lengkap',
             'nama_panggilan',
             'jenis_kelamin',

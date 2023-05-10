@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Obat $model */
 
-$this->title = $model->id_obat;
-$this->params['breadcrumbs'][] = ['label' => 'Obats', 'url' => ['index']];
+$this->title = $model->nama_obat;
+$this->params['breadcrumbs'][] = ['label' => 'Data Obat', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_obat' => $model->id_obat], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_obat' => $model->id_obat], [
+        <?= Html::a('Edit', ['update', 'id_obat' => $model->id_obat], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Hapus', ['delete', 'id_obat' => $model->id_obat], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Anda yakin ingin menghapus data ?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_obat',
+            // 'id_obat',
             'nama_obat',
             'stock_obat',
             'harga_beli',

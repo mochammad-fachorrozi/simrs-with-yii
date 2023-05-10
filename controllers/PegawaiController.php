@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use Yii;
+use app\models\User;
 use app\models\Pegawai;
-use app\models\PegawaiSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\PegawaiSearch;
+use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * PegawaiController implements the CRUD actions for Pegawai model.
@@ -21,6 +24,20 @@ class PegawaiController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['index', 'create', 'update', 'view'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                return User::isUserAdmin(Yii::$app->user->identity->username);
+                            }
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

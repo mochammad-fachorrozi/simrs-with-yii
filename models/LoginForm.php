@@ -31,7 +31,7 @@ class LoginForm extends Model
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            [['username', 'password'], 'validatePassword'],
         ];
     }
 
@@ -47,7 +47,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user || !$user->validatePassword($this->password) || !$user->validateUsername($this->username)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -60,7 +60,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
     }
@@ -77,5 +77,41 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    public function loginAdmin()
+    {
+        if ($this->validate() && User::isUserAdmin($this->username)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
+    }
+
+    public function loginDokter()
+    {
+        if ($this->validate() && User::isUserDokter($this->username)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
+    }
+
+    public function loginPerawat()
+    {
+        if ($this->validate() && User::isUserPerawat($this->username)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
+    }
+
+    public function loginKasir()
+    {
+        if ($this->validate() && User::isUserKasir($this->username)) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
     }
 }

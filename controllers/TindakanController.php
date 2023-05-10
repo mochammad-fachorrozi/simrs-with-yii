@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
-use app\models\Tindakan;
-use app\models\TindakanSearch;
+use Yii;
+use app\models\User;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Tindakan;
 use yii\filters\VerbFilter;
+use app\models\TindakanSearch;
+use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * TindakanController implements the CRUD actions for Tindakan model.
@@ -21,6 +24,20 @@ class TindakanController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['index', 'create', 'update', 'view'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                return User::isUserAdmin(Yii::$app->user->identity->username) || User::isUserPerawat(Yii::$app->user->identity->username) || User::isUserDokter(Yii::$app->user->identity->username);
+                            }
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

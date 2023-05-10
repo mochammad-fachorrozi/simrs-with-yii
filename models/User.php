@@ -4,6 +4,13 @@ namespace app\models;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    const ADMIN = 'admin';
+    const DOKTER = 'dokter';
+    const PERAWAT = 'perawat';
+    const KASIR = 'kasir';
+    const APOTEKER = 'apoteker';
+
+
     public static function tableName()
     {
         return 'user';
@@ -15,14 +22,69 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            // [['status_active'], 'string'],
-            // [['pegawai_id'], 'integer'],
-            // [['created_at', 'updated_at'], 'safe'],
-            // [['username'], 'string', 'max' => 20],
-            // [['password', 'authKey', 'accessToken'], 'string', 'max' => 250],
-            // [['role_user'], 'string', 'max' => 30],
+            [['created_at', 'updated_at', 'authKey', 'accessToken'], 'safe'],
+            [['username'], 'string', 'max' => 20],
+            [['password', 'authKey', 'accessToken'], 'string', 'max' => 250],
+            [['role_user'], 'string', 'max' => 30],
+            ['role_user', 'default', 'value' => 'Perawat'],
+            ['role_user', 'in', 'range' => [self::ADMIN, self::PERAWAT, self::DOKTER, self::KASIR]],
             ['status_active', 'default', 'value' => '1'],
         ];
+    }
+
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['username' => $username, 'role_user' => self::ADMIN])) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    public static function isUserDokter($username)
+    {
+        if (static::findOne(['username' => $username, 'role_user' => self::DOKTER])) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    public static function isUserPerawat($username)
+    {
+        if (static::findOne(['username' => $username, 'role_user' => self::PERAWAT])) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    public static function isUserKasir($username)
+    {
+        if (static::findOne(['username' => $username, 'role_user' => self::KASIR])) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    public static function isUserApoteker($username)
+    {
+        if (static::findOne(['username' => $username, 'role_user' => self::APOTEKER])) {
+
+            return true;
+        } else {
+
+            return false;
+        }
     }
 
 
@@ -93,5 +155,25 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public function validateUsername($username)
+    {
+        return $this->username === $username;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'id',
+            'username' => 'Username',
+            'password' => 'Password',
+            'authKey' => 'AuthKey',
+            'accessToken' => 'AccessToken',
+            'status_aktif' => 'Status Aktif',
+            'role_user' => 'Role User',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
     }
 }

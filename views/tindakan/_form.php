@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'harga_tindakan')->textInput() ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="form-group mt-2">
+        <?= Html::submitButton('Simpan', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

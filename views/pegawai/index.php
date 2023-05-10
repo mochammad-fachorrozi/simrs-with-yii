@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /** @var app\models\PegawaiSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Pegawais';
+$this->title = 'Data Pegawai';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pegawai-index">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Pegawai', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Pegawai', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -45,14 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'nama_panggilan',
             'jenis_kelamin',
             'tempat_lahir',
-            [
-                'header' => 'Tanggal Lahir',
-                'headerOptions' => ['class' => 'text-center text-primary'],
-                'contentOptions' => ['class' => 'text-center'],
-                'value' => function ($model) {
-                    return date("d-M-Y", strtotime($model->tanggal_lahir));
-                }
-            ],
+            'tanggal_lahir',
+            // [
+            //     'header' => 'Tanggal Lahir',
+            //     'headerOptions' => ['class' => 'text-center text-primary'],
+            //     'contentOptions' => ['class' => 'text-center'],
+            //     'value' => function ($model) {
+            //         return date("d-M-Y", strtotime($model->tanggal_lahir));
+            //     }
+            // ],
             'status_perkawinan',
             'agama',
             //'pendidikan',

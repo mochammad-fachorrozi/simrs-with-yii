@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Obat;
-use app\models\ObatSearch;
+use app\models\User;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\ObatSearch;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 /**
  * ObatController implements the CRUD actions for Obat model.
@@ -21,6 +24,20 @@ class ObatController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['index', 'create', 'update', 'view'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                            'matchCallback' => function ($rule, $action) {
+                                return User::isUserAdmin(Yii::$app->user->identity->username) || User::isUserApoteker(Yii::$app->user->identity->username);
+                            }
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [

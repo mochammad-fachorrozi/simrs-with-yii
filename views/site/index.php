@@ -6,7 +6,7 @@ $this->title = 'SIMRS';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent">
+    <div class="jumbotron text-center bg-transparent my-5">
         <h1 class="display-4">Selamat Datang!</h1>
 
         <p class="lead">Sistem Informasi Management Rumah Sakit </p>
@@ -16,7 +16,7 @@ $this->title = 'SIMRS';
 
     <div class="body-content">
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-4">
                 <h2>Heading</h2>
 
@@ -47,7 +47,7 @@ $this->title = 'SIMRS';
 
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>

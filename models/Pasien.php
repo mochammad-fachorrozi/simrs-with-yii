@@ -83,4 +83,15 @@ class Pasien extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Transaksi::class, ['pasien_id' => 'id_pasien']);
     }
+
+
+    // grafik
+    public static function grafikPasien()
+    {
+        $sql = "SELECT count(created_at) as jumlah, DATE(created_at) as tanggal from pasien group by created_at;";
+        $result = Yii::$app->db->createCommand($sql)->queryAll();
+        // print_r($result);
+        // exit;
+        return $result;
+    }
 }
